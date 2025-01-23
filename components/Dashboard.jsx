@@ -3,16 +3,12 @@ import { Fugaz_One } from 'next/font/google';
 import React, { useEffect, useState } from 'react'
 import Calendar from './Calendar';
 import { useAuth } from '@/context/AuthContext';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/firebase';
 import Loading from './Loading';
-import Login from './Login';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
 
 export default function Dashboard() {
-  const { currentUser, userDataObj, setUserDataObj, loading } = useAuth()
   const [data, setData] = useState({})
   const now = new Date()
 
@@ -77,21 +73,6 @@ export default function Dashboard() {
     'Existing': '😶',
     'Good': '😊',
     'Elated': '😍',
-  }
-
-  useEffect(() => {
-    if (!currentUser || !userDataObj) {
-      return
-    }
-    setData(userDataObj)
-  }, [currentUser, userDataObj])
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (!currentUser) {
-    return <Login />
   }
 
   return (
